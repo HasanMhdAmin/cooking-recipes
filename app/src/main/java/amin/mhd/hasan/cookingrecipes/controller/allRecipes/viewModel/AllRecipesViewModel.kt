@@ -19,5 +19,9 @@ class AllRecipesViewModel(application: Application) : AndroidViewModel(applicati
         recipes.postValue(recipesList)
     }
 
+    fun deleteRecipes(recipe: Recipe) {
+        LocalStorage.getInstance().deleteRecipe(getApplication(), recipe)
+        getRecipes()
+    }
 
 }

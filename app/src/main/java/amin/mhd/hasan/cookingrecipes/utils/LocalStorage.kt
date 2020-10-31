@@ -61,7 +61,7 @@ class LocalStorage {
         editor.apply()
     }
 
-    private fun overrideRecipes(
+    private fun overwriteRecipes(
         context: Context,
         recipes: MutableList<Recipe>
     ) {
@@ -86,7 +86,13 @@ class LocalStorage {
                 r.images = recipe.images
             }
         }
-        overrideRecipes(context, recipes)
+        overwriteRecipes(context, recipes)
+    }
+
+    fun deleteRecipe(context: Context, recipe: Recipe) {
+        val recipes = getRecipes(context)
+        recipes.remove(recipes.find { r -> r.id == recipe.id })
+        overwriteRecipes(context, recipes)
     }
 
 }

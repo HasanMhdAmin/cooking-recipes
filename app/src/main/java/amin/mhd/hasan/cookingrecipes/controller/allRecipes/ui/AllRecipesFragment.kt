@@ -5,6 +5,8 @@ import amin.mhd.hasan.cookingrecipes.controller.MainActivity2
 import amin.mhd.hasan.cookingrecipes.controller.allRecipes.adapter.RecipesAdapter
 import amin.mhd.hasan.cookingrecipes.controller.allRecipes.viewModel.AllRecipesViewModel
 import amin.mhd.hasan.cookingrecipes.model.Recipe
+import amin.mhd.hasan.cookingrecipes.utils.DialogUtils
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -87,7 +89,21 @@ class AllRecipesFragment : Fragment(), OnImageClickListener1 {
                     (activity as MainActivity2).setEditRecipeFragment(recipe)
                 }
                 R.id.delete -> {
-                    Log.d("RecipeViewHolder", "bindViews: delete")
+                    DialogUtils.showAlertDialog(
+                        context,
+                        true,
+                        null,
+                        "Are you sure you want to delete this recipe?",
+                        "Delete",
+                        DialogInterface.OnClickListener { dialog, which ->
+                            viewModel.deleteRecipes(
+                                recipe
+                            )
+                        },
+                        "Cancel",
+                        null
+                    )
+
                 }
                 R.id.share -> {
                     Log.d("RecipeViewHolder", "bindViews: share")
