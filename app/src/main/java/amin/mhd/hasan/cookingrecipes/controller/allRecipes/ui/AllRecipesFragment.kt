@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.*
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -106,7 +107,13 @@ class AllRecipesFragment : Fragment(), OnImageClickListener1 {
 
                 }
                 R.id.share -> {
-                    Log.d("RecipeViewHolder", "bindViews: share")
+                    activity?.let {
+                        ShareCompat.IntentBuilder.from(it)
+                            .setType("text/plain")
+                            .setChooserTitle(R.string.share)
+                            .setText(recipe.title + "\n\n" + recipe.description)
+                            .startChooser()
+                    }
                 }
                 else -> {
                 }
