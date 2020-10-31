@@ -6,6 +6,7 @@ import amin.mhd.hasan.cookingrecipes.controller.addRecipe.adapter.AddImagesAdapt
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.listener.OnRecyclerViewItemClickListener
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.viewModel.AddRecipeViewModel
 import amin.mhd.hasan.cookingrecipes.databinding.AddRecipeFragmentBinding
+import amin.mhd.hasan.cookingrecipes.model.Recipe
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -23,15 +24,36 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.add_recipe_fragment.*
 
 private const val TAG = "AddRecipeFragment"
+private const val RECIPE = "recipe"
 
+/**
+ * This fragment will handle the logic of create new recipe
+ * and edit an already added recipe.
+ */
 class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
     private val GALLERY_ACTIVITY_RESULT = 1
-    private var images = mutableListOf<String>()
     lateinit var binding: AddRecipeFragmentBinding
+
+    private var images = mutableListOf<String>()
+    private var recipe: Recipe? = null
     private lateinit var imagesAdapter: AddImagesAdapter
 
     companion object {
         fun newInstance() = AddRecipeFragment()
+        fun newInstance(recipe: Recipe): AddRecipeFragment {
+            return AddRecipeFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(RECIPE, recipe)
+                }
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            recipe = it.getSerializable(RECIPE) as Recipe?
+        }
     }
 
     private lateinit var viewModel: AddRecipeViewModel
@@ -63,6 +85,12 @@ class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         imagesAdapter = AddImagesAdapter(images, this)
         imagesRecyclerView.adapter = imagesAdapter
+
+        // check if the screen is in edit mode
+        if (recipe != null) {
+            viewModel.bindRecipe(recipe!!)
+        }
+
 
         viewModel.titleErrorMessage.observe(viewLifecycleOwner, Observer {
             title.error = it

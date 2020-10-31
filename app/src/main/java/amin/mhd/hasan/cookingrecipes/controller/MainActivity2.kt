@@ -4,6 +4,7 @@ import amin.mhd.hasan.cookingrecipes.R
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.ui.AddRecipeFragment
 import amin.mhd.hasan.cookingrecipes.controller.allRecipes.ui.AllRecipesFragment
 import amin.mhd.hasan.cookingrecipes.controller.gallery.GalleryFragment
+import amin.mhd.hasan.cookingrecipes.model.Recipe
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,13 @@ class MainActivity2 : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .addToBackStack("AddRecipeFragment")
             .replace(R.id.container, AddRecipeFragment.newInstance())
+            .commit()
+    }
+
+    public fun setEditRecipeFragment(recipe: Recipe) {
+        supportFragmentManager.beginTransaction()
+            .addToBackStack("EditRecipeFragment")
+            .replace(R.id.container, AddRecipeFragment.newInstance(recipe))
             .commit()
     }
 

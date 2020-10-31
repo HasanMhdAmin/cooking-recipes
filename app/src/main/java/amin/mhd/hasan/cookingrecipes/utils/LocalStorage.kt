@@ -2,7 +2,6 @@ package amin.mhd.hasan.cookingrecipes.utils
 
 import amin.mhd.hasan.cookingrecipes.model.Recipe
 import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -48,7 +47,6 @@ class LocalStorage {
     ) {
         // get recipes and add the passed recipe to them
         val recipes = getRecipes(context)
-        Log.d(TAG, "addRecipe: recipes size before add: ${recipes.size}")
         recipes.add(recipe)
 
         val sharedPreferences = context.getSharedPreferences(
@@ -62,4 +60,33 @@ class LocalStorage {
         )
         editor.apply()
     }
+
+    private fun overrideRecipes(
+        context: Context,
+        recipes: MutableList<Recipe>
+    ) {
+        val sharedPreferences = context.getSharedPreferences(
+            sharedPreferencesKey,
+            Context.MODE_PRIVATE
+        )
+        val editor = sharedPreferences.edit()
+        editor.putString(
+            RECIPES_LIST,
+            gson.toJson(recipes)
+        )
+        editor.apply()
+    }
+
+    fun editRecipe(context: Context, recipe: Recipe) {
+        val recipes = getRecipes(context)
+        for (r in recipes) {
+            if (r.id == recipe.id) {
+                r.title = recipe.title
+                r.description = recipe.description
+                r.images = recipe.images
+            }
+        }
+        overrideRecipes(context, recipes)
+    }
+
 }
