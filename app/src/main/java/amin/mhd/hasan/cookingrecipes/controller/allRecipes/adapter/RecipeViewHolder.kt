@@ -1,6 +1,7 @@
 package amin.mhd.hasan.cookingrecipes.controller.allRecipes.adapter
 
 import amin.mhd.hasan.cookingrecipes.R
+import amin.mhd.hasan.cookingrecipes.controller.allRecipes.listener.OnImageClickListener
 import amin.mhd.hasan.cookingrecipes.model.Recipe
 import android.content.Context
 import android.view.View
@@ -17,7 +18,7 @@ class RecipeViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
     var desc: TextView = rootView.findViewById(R.id.desc)
     var imagesRecyclerView: RecyclerView = rootView.findViewById(R.id.imagesRecyclerView)
 
-    fun bindViews(item: Recipe, context: Context) {
+    fun bindViews(item: Recipe, context: Context, onImageClickListener: OnImageClickListener) {
         title.text = item.title
         desc.text = item.description
 
@@ -29,7 +30,7 @@ class RecipeViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
         if (item.images.isEmpty()) {
             imagesRecyclerView.visibility = View.GONE
         } else {
-            val imagesAdapter = ImagesAdapter(item.images)
+            val imagesAdapter = ImagesAdapter(item.images, onImageClickListener)
             imagesRecyclerView.adapter = imagesAdapter
         }
     }

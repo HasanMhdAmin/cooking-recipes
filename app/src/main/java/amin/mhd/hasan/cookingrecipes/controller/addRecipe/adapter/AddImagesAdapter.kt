@@ -67,7 +67,7 @@ class AddImagesAdapter(
 
     class ImageViewHolder(
         rootView: View,
-        var onRecyclerViewItemClickListener: OnRecyclerViewItemClickListener
+        private var onRecyclerViewItemClickListener: OnRecyclerViewItemClickListener
     ) : RecyclerView.ViewHolder(rootView) {
 
         private var imageItem: AppCompatImageView = rootView.findViewById(R.id.imageItem)
@@ -86,7 +86,7 @@ class AddImagesAdapter(
 
     class HeaderViewHolder(
         rootView: View,
-        var onRecyclerViewItemClickListener: OnRecyclerViewItemClickListener
+        private var onRecyclerViewItemClickListener: OnRecyclerViewItemClickListener
     ) : RecyclerView.ViewHolder(rootView) {
         private var addImage: RelativeLayout = rootView.findViewById(R.id.addImage)
 

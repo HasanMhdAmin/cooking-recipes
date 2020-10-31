@@ -2,9 +2,9 @@ package amin.mhd.hasan.cookingrecipes.controller.allRecipes.ui
 
 import amin.mhd.hasan.cookingrecipes.R
 import amin.mhd.hasan.cookingrecipes.controller.MainActivity2
-import amin.mhd.hasan.cookingrecipes.controller.addRecipe.ui.AddRecipeFragment
 import amin.mhd.hasan.cookingrecipes.controller.allRecipes.adapter.RecipesAdapter
 import amin.mhd.hasan.cookingrecipes.controller.allRecipes.viewModel.AllRecipesViewModel
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -13,11 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.all_recipes_fragment.*
+import amin.mhd.hasan.cookingrecipes.controller.allRecipes.listener.OnImageClickListener as OnImageClickListener1
 
 
 private const val TAG = "AllRecipesFragment"
 
-class AllRecipesFragment : Fragment() {
+class AllRecipesFragment : Fragment(), OnImageClickListener1 {
 
     companion object {
         fun newInstance() =
@@ -49,7 +50,7 @@ class AllRecipesFragment : Fragment() {
 
         viewModel.recipes.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.d(TAG, "onActivityCreated: list size: ${it.size}")
-            recipesAdapter = context?.let { ctx -> RecipesAdapter(it, ctx) }!!
+            recipesAdapter = context?.let { ctx -> RecipesAdapter(it, ctx, this) }!!
             allRecipesRecyclerView.adapter = recipesAdapter
         })
     }
@@ -66,6 +67,11 @@ class AllRecipesFragment : Fragment() {
             (activity as MainActivity2).setAddRecipeFragment()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onItemClickListener(imageUri: Uri, images: ArrayList<String>) {
+        Log.d(TAG, "onItemClickListener: ${imageUri.path}")
+        (activity as MainActivity2).setGalleryFragment(imageUri, images)
     }
 
 }

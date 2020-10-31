@@ -13,4 +13,6 @@
     <string name="title_error_message">Please enter the recipe title</string>
     <string name="desc_error_message">Please enter the recipe description</string>
     <string name="no_picture_selected">No picture selected</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
