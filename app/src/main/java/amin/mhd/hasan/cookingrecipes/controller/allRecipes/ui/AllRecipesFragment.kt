@@ -9,7 +9,6 @@ import amin.mhd.hasan.cookingrecipes.utils.DialogUtils
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
@@ -53,9 +52,17 @@ class AllRecipesFragment : Fragment(), OnImageClickListener1 {
         allRecipesRecyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel.recipes.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            Log.d(TAG, "onActivityCreated: list size: ${it.size}")
-            recipesAdapter = context?.let { ctx -> RecipesAdapter(it, ctx, this) }!!
-            allRecipesRecyclerView.adapter = recipesAdapter
+
+            if (it.isNotEmpty()) {
+                recipesAdapter = context?.let { ctx -> RecipesAdapter(it, ctx, this) }!!
+                allRecipesRecyclerView.adapter = recipesAdapter
+                addRecipe.visibility = View.GONE
+                allRecipesRecyclerView.visibility = View.VISIBLE
+            } else {
+                addRecipe.visibility = View.VISIBLE
+                allRecipesRecyclerView.visibility = View.GONE
+                addRecipe.setOnClickListener { (activity as MainActivity2).setAddRecipeFragment() }
+            }
         })
     }
 
