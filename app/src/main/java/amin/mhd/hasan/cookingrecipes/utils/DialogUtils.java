@@ -1,9 +1,7 @@
 package amin.mhd.hasan.cookingrecipes.utils;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -49,21 +47,8 @@ public class DialogUtils {
                 }
             }
             alertDialog = builder.create();
-//            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-//                @Override
-//                public void onShow(DialogInterface dialogInterface) {
-//                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor( getMyTheme(context).getPrimaryColor());
-//                    alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(( getMyTheme(context).getPrimaryColor()));
-//                }
-//            });
 
             alertDialog.setCancelable(cancelable);
-//            try {
-//                alertDialog.getWindow()
-//                        .getAttributes().windowAnimations = R.style.DialogAnimation;
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
             alertDialog.show();
 
         }
@@ -74,7 +59,4 @@ public class DialogUtils {
             alertDialog.dismiss();
         }
     }
-
-
-
 }

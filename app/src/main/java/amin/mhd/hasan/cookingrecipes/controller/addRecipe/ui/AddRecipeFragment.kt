@@ -12,7 +12,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.add_recipe_fragment.*
 
-private const val TAG = "AddRecipeFragment"
 private const val RECIPE = "recipe"
 
 /**
@@ -91,7 +89,6 @@ class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
             viewModel.bindRecipe(recipe!!)
         }
 
-
         viewModel.titleErrorMessage.observe(viewLifecycleOwner, Observer {
             title.error = it
         })
@@ -145,7 +142,6 @@ class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
         intent: Intent?
     ) {
         if (resultCode == Activity.RESULT_OK && requestCode == GALLERY_ACTIVITY_RESULT) {
-            Log.d(TAG, "onActivityResult: 1")
             if (intent!!.clipData != null) {
                 val count = intent.clipData!!.itemCount
                 for (i in 0 until count) {

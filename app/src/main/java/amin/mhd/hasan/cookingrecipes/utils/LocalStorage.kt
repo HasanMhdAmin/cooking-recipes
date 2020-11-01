@@ -8,10 +8,12 @@ import com.google.gson.reflect.TypeToken
 /**
  * Created by Hasan Mhd Amin on 30.10.20
  */
+
+private const val RECIPES_LIST = "recipes_list"
+private const val sharedPreferencesKey = "CookingRecipes_PREFS"
+
 class LocalStorage {
-    private val TAG = "LocalStorage"
-    private val sharedPreferencesKey = "CookingRecipes_PREFS"
-    private val RECIPES_LIST = "recipes_list"
+
     private val gson = Gson()
 
     companion object {

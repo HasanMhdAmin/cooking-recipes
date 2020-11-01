@@ -19,9 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.all_recipes_fragment.*
 import amin.mhd.hasan.cookingrecipes.controller.allRecipes.listener.OnImageClickListener as OnImageClickListener1
 
-
-private const val TAG = "AllRecipesFragment"
-
 class AllRecipesFragment : Fragment(), OnImageClickListener1 {
 
     companion object {

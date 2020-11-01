@@ -57,7 +57,6 @@ class ImageUtils {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos)
                 fos.close()
             } catch (e: Exception) {
-                Log.e("SAVE_IMAGE", e.message, e)
             }
             return myPath
         }

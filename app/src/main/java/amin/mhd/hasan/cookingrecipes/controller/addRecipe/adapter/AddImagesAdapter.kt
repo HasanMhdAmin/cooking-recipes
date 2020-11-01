@@ -11,14 +11,14 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 
 
+private const val TYPE_HEADER = 0
+private const val TYPE_ITEM = 1
+
 class AddImagesAdapter(
     private val images: List<String>,
     private val onRecyclerViewItemClickListener: OnRecyclerViewItemClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private val TYPE_HEADER = 0
-    private val TYPE_ITEM = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -95,7 +95,6 @@ class AddImagesAdapter(
                 onRecyclerViewItemClickListener.onRecyclerViewHeaderClickListener()
             }
         }
-
     }
 
 }
