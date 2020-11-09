@@ -40,6 +40,7 @@ class RecipeViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
         if (item.images.isEmpty()) {
             imagesRecyclerView.visibility = View.GONE
         } else {
+            imagesRecyclerView.visibility = View.VISIBLE
             val imagesAdapter = ImagesAdapter(item.images, onImageClickListener)
             imagesRecyclerView.adapter = imagesAdapter
         }

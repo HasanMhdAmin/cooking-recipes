@@ -108,7 +108,6 @@ class AllRecipesFragment : Fragment(), OnImageClickListener1 {
                         "Cancel",
                         null
                     )
-
                 }
                 R.id.share -> {
                     activity?.let {

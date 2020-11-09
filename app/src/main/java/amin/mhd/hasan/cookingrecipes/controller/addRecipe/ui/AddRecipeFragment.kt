@@ -7,11 +7,14 @@ import amin.mhd.hasan.cookingrecipes.controller.addRecipe.listener.OnRecyclerVie
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.viewModel.AddRecipeViewModel
 import amin.mhd.hasan.cookingrecipes.databinding.AddRecipeFragmentBinding
 import amin.mhd.hasan.cookingrecipes.model.Recipe
+import amin.mhd.hasan.cookingrecipes.utils.DialogUtils
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -111,6 +114,26 @@ class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
             }
         })
 
+        viewModel.goBackConfirmationNeeded.observe(viewLifecycleOwner, Observer {
+            Log.d("AddRecipe", "onActivityCreated: goBackConfirmationNeeded: $it")
+            if (it) {
+                DialogUtils.showAlertDialog(
+                    context,
+                    true,
+                    null,
+                    "Are you sure you want to exit?\nThe data will be dismissed",
+                    "Exit",
+                    DialogInterface.OnClickListener { dialog, which ->
+                        activity?.onBackPressed()
+                    },
+                    "Keep",
+                    null
+                )
+            } else {
+                activity?.onBackPressed()
+            }
+        })
+
     }
 
     override fun onItemRecyclerViewClickListener(imageUri: Uri) {
@@ -173,7 +196,7 @@ class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
         if (id == R.id.action_save) {
             viewModel.saveRecipe()
         } else if (id == android.R.id.home) {
-            activity?.onBackPressed()
+            viewModel.onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }

@@ -15,6 +15,7 @@ class AddRecipeViewModel(application: Application) : AndroidViewModel(applicatio
 
 
     var saved: MutableLiveData<Boolean> = MutableLiveData()
+    var goBackConfirmationNeeded: MutableLiveData<Boolean> = MutableLiveData()
     var title: MutableLiveData<String> = MutableLiveData("")
     var description: MutableLiveData<String> = MutableLiveData("")
     var images: MutableLiveData<MutableList<String>> = MutableLiveData()
@@ -126,5 +127,13 @@ class AddRecipeViewModel(application: Application) : AndroidViewModel(applicatio
         title.postValue(recipe.title)
         description.postValue(recipe.description)
         images.postValue(recipe.images.toMutableList())
+    }
+
+    fun onBackPressed() {
+        if (title.value!!.isEmpty() && description.value!!.isEmpty()) {
+            goBackConfirmationNeeded.postValue(false)
+        } else {
+            goBackConfirmationNeeded.postValue(true)
+        }
     }
 }
