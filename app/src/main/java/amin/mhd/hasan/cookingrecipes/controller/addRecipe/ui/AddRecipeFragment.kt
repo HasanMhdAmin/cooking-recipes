@@ -5,6 +5,7 @@ import amin.mhd.hasan.cookingrecipes.controller.MainActivity2
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.adapter.AddImagesAdapter
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.listener.OnRecyclerViewItemClickListener
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.viewModel.AddRecipeViewModel
+import amin.mhd.hasan.cookingrecipes.controller.navi.SuperiorFragment
 import amin.mhd.hasan.cookingrecipes.databinding.AddRecipeFragmentBinding
 import amin.mhd.hasan.cookingrecipes.model.Recipe
 import amin.mhd.hasan.cookingrecipes.utils.DialogUtils
@@ -14,12 +15,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +30,7 @@ private const val RECIPE = "recipe"
  * This fragment will handle the logic of create new recipe
  * and edit an already added recipe.
  */
-class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
+class AddRecipeFragment : SuperiorFragment(), OnRecyclerViewItemClickListener {
     private val GALLERY_ACTIVITY_RESULT = 1
     lateinit var binding: AddRecipeFragmentBinding
 
@@ -77,7 +76,6 @@ class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
         (activity as AppCompatActivity?)?.supportActionBar?.setHomeButtonEnabled(true)
         (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
         viewModel = ViewModelProvider(this).get(AddRecipeViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -115,25 +113,35 @@ class AddRecipeFragment : Fragment(), OnRecyclerViewItemClickListener {
         })
 
         viewModel.goBackConfirmationNeeded.observe(viewLifecycleOwner, Observer {
-            Log.d("AddRecipe", "onActivityCreated: goBackConfirmationNeeded: $it")
-            if (it) {
-                DialogUtils.showAlertDialog(
-                    context,
-                    true,
-                    null,
-                    "Are you sure you want to exit?\nThe data will be dismissed",
-                    "Exit",
-                    DialogInterface.OnClickListener { dialog, which ->
-                        activity?.onBackPressed()
-                    },
-                    "Keep",
-                    null
-                )
-            } else {
-                activity?.onBackPressed()
-            }
+            goBack(it)
         })
 
+    }
+
+    override fun onBackPressed(): Boolean {
+        viewModel.onBackPressed()
+        return true
+    }
+
+    private fun goBack(isGoBackConfirmationNeeded: Boolean?) {
+        if (isGoBackConfirmationNeeded == null)
+            return
+        if (isGoBackConfirmationNeeded) {
+            DialogUtils.showAlertDialog(
+                context,
+                true,
+                null,
+                "Are you sure you want to exit?\nThe data will be dismissed",
+                "Exit",
+                DialogInterface.OnClickListener { dialog, which ->
+                    activity?.supportFragmentManager?.popBackStack()
+                },
+                "Keep",
+                null
+            )
+        } else {
+            activity?.supportFragmentManager?.popBackStack()
+        }
     }
 
     override fun onItemRecyclerViewClickListener(imageUri: Uri) {
