@@ -86,6 +86,7 @@ class LocalStorage {
                 r.title = recipe.title
                 r.description = recipe.description
                 r.images = recipe.images
+                break
             }
         }
         overwriteRecipes(context, recipes)
