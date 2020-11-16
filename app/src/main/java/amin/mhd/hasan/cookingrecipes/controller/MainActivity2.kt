@@ -4,8 +4,8 @@ import amin.mhd.hasan.cookingrecipes.R
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.ui.AddRecipeFragment
 import amin.mhd.hasan.cookingrecipes.controller.allRecipes.ui.AllRecipesFragment
 import amin.mhd.hasan.cookingrecipes.controller.gallery.GalleryFragment
-import amin.mhd.hasan.cookingrecipes.controller.navi.SuperiorActivity
 import amin.mhd.hasan.cookingrecipes.model.Recipe
+import amin.mhd.hasan.core.SuperiorActivity
 import android.net.Uri
 import android.os.Bundle
 

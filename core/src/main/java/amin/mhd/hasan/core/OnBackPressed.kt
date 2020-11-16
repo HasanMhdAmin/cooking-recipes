@@ -1,4 +1,4 @@
-package amin.mhd.hasan.cookingrecipes.controller.navi
+package amin.mhd.hasan.core
 
 /**
  * Created by Hasan Mhd Amin on 10.11.20

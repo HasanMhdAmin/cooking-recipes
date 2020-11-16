@@ -1,4 +1,4 @@
-package amin.mhd.hasan.cookingrecipes.controller.navi
+package amin.mhd.hasan.core
 
 import androidx.appcompat.app.AppCompatActivity
 

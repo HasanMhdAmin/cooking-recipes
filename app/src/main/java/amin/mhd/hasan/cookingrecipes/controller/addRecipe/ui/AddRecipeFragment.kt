@@ -5,10 +5,10 @@ import amin.mhd.hasan.cookingrecipes.controller.MainActivity2
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.adapter.AddImagesAdapter
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.listener.OnRecyclerViewItemClickListener
 import amin.mhd.hasan.cookingrecipes.controller.addRecipe.viewModel.AddRecipeViewModel
-import amin.mhd.hasan.cookingrecipes.controller.navi.SuperiorFragment
 import amin.mhd.hasan.cookingrecipes.databinding.AddRecipeFragmentBinding
 import amin.mhd.hasan.cookingrecipes.model.Recipe
 import amin.mhd.hasan.cookingrecipes.utils.DialogUtils
+import amin.mhd.hasan.core.SuperiorFragment
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
@@ -131,12 +131,12 @@ class AddRecipeFragment : SuperiorFragment(), OnRecyclerViewItemClickListener {
                 context,
                 true,
                 null,
-                "Are you sure you want to exit?\nThe data will be dismissed",
-                "Exit",
+                getString(R.string.exit_confirmation),
+                getString(R.string.exit),
                 DialogInterface.OnClickListener { dialog, which ->
                     activity?.supportFragmentManager?.popBackStack()
                 },
-                "Keep",
+                getString(R.string.keep),
                 null
             )
         } else {
