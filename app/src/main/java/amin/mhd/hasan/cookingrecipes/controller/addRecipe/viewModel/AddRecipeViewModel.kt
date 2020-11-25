@@ -3,6 +3,7 @@ package amin.mhd.hasan.cookingrecipes.controller.addRecipe.viewModel
 import amin.mhd.hasan.cookingrecipes.R
 import amin.mhd.hasan.cookingrecipes.enums.DisplayMood
 import amin.mhd.hasan.cookingrecipes.model.Recipe
+import amin.mhd.hasan.cookingrecipes.model.RecipesDatabase
 import amin.mhd.hasan.cookingrecipes.utils.ImageUtils
 import amin.mhd.hasan.cookingrecipes.utils.LocalStorage
 import android.app.Application
@@ -61,11 +62,15 @@ class AddRecipeViewModel(application: Application) : AndroidViewModel(applicatio
         if (isValid()) {
             if (displayMood == DisplayMood.ADD) {
                 val recipe = Recipe()
-                recipe.id = UUID.randomUUID().toString()
+//                recipe.id = UUID.randomUUID().toString()
                 recipe.title = title.value!!
                 recipe.description = description.value!!
                 recipe.images = images.value!!
-                LocalStorage.getInstance().addRecipe(getApplication(), recipe)
+
+                var db = RecipesDatabase.getInstance(getApplication());
+                db.recipesDao().insertRecipe(recipe)
+
+//                LocalStorage.getInstance().addRecipe(getApplication(), recipe)
                 saved.postValue(true)
             } else if (displayMood == DisplayMood.EDIT) {
                 recipe.title = title.value!!
