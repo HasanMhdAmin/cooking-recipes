@@ -1,16 +1,16 @@
 package amin.mhd.hasan.cookingrecipes.controller.addRecipe.viewModel
 
 import amin.mhd.hasan.cookingrecipes.R
+import amin.mhd.hasan.cookingrecipes.database.RecipesDatabase
 import amin.mhd.hasan.cookingrecipes.enums.DisplayMood
 import amin.mhd.hasan.cookingrecipes.model.Recipe
-import amin.mhd.hasan.cookingrecipes.model.RecipesDatabase
 import amin.mhd.hasan.cookingrecipes.utils.ImageUtils
-import amin.mhd.hasan.cookingrecipes.utils.LocalStorage
 import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import java.util.*
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class AddRecipeViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -59,25 +59,24 @@ class AddRecipeViewModel(application: Application) : AndroidViewModel(applicatio
 
 
     fun saveRecipe() {
-        if (isValid()) {
-            if (displayMood == DisplayMood.ADD) {
-                val recipe = Recipe()
-//                recipe.id = UUID.randomUUID().toString()
-                recipe.title = title.value!!
-                recipe.description = description.value!!
-                recipe.images = images.value!!
 
+        viewModelScope.launch {
+            if (isValid()) {
                 var db = RecipesDatabase.getInstance(getApplication());
-                db.recipesDao().insertRecipe(recipe)
-
-//                LocalStorage.getInstance().addRecipe(getApplication(), recipe)
-                saved.postValue(true)
-            } else if (displayMood == DisplayMood.EDIT) {
-                recipe.title = title.value!!
-                recipe.description = description.value!!
-                recipe.images = images.value!!
-                LocalStorage.getInstance().editRecipe(getApplication(), recipe)
-                saved.postValue(true)
+                if (displayMood == DisplayMood.ADD) {
+                    val recipe = Recipe()
+                    recipe.title = title.value!!
+                    recipe.description = description.value!!
+                    recipe.images.recipeImages = images.value!!
+                    db.recipesDao().insertRecipe(recipe)
+                    saved.postValue(true)
+                } else if (displayMood == DisplayMood.EDIT) {
+                    recipe.title = title.value!!
+                    recipe.description = description.value!!
+                    recipe.images.recipeImages = images.value!!
+                    db.recipesDao().update(recipe)
+                    saved.postValue(true)
+                }
             }
         }
     }
@@ -131,7 +130,7 @@ class AddRecipeViewModel(application: Application) : AndroidViewModel(applicatio
         displayMood = DisplayMood.EDIT
         title.postValue(recipe.title)
         description.postValue(recipe.description)
-        images.postValue(recipe.images.toMutableList())
+        images.postValue(recipe.images.recipeImages.toMutableList())
     }
 
     fun onBackPressed() {
