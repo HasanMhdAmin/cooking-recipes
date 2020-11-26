@@ -1,18 +1,22 @@
 package amin.mhd.hasan.cookingrecipes.controller.addRecipe.viewModel
 
 import amin.mhd.hasan.cookingrecipes.R
-import amin.mhd.hasan.cookingrecipes.database.RecipesDatabase
 import amin.mhd.hasan.cookingrecipes.enums.DisplayMood
 import amin.mhd.hasan.cookingrecipes.model.Recipe
+import amin.mhd.hasan.cookingrecipes.repository.Repository
 import amin.mhd.hasan.cookingrecipes.utils.ImageUtils
 import android.app.Application
 import android.net.Uri
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class AddRecipeViewModel(application: Application) : AndroidViewModel(application) {
+class AddRecipeViewModel @ViewModelInject constructor(
+    application: Application,
+    private val repository: Repository
+) : AndroidViewModel(application) {
 
 
     var saved: MutableLiveData<Boolean> = MutableLiveData()
@@ -62,19 +66,18 @@ class AddRecipeViewModel(application: Application) : AndroidViewModel(applicatio
 
         viewModelScope.launch {
             if (isValid()) {
-                var db = RecipesDatabase.getInstance(getApplication());
                 if (displayMood == DisplayMood.ADD) {
                     val recipe = Recipe()
                     recipe.title = title.value!!
                     recipe.description = description.value!!
                     recipe.images.recipeImages = images.value!!
-                    db.recipesDao().insertRecipe(recipe)
+                    repository.insertRecipe(recipe)
                     saved.postValue(true)
                 } else if (displayMood == DisplayMood.EDIT) {
                     recipe.title = title.value!!
                     recipe.description = description.value!!
                     recipe.images.recipeImages = images.value!!
-                    db.recipesDao().update(recipe)
+                    repository.updateRecipe(recipe)
                     saved.postValue(true)
                 }
             }

@@ -3,6 +3,7 @@
     package="amin.mhd.hasan.cookingrecipes">
 
     <application
+        android:name=".CookingRecipes"
         android:allowBackup="true"
         android:icon="@mipmap/bake"
         android:label="@string/app_name"

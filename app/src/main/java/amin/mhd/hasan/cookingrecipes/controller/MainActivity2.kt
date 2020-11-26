@@ -8,7 +8,9 @@ import amin.mhd.hasan.cookingrecipes.model.Recipe
 import amin.mhd.hasan.core.SuperiorActivity
 import android.net.Uri
 import android.os.Bundle
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity2 : SuperiorActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

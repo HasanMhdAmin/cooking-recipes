@@ -22,6 +22,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.add_recipe_fragment.*
 
 private const val RECIPE = "recipe"
@@ -30,6 +31,7 @@ private const val RECIPE = "recipe"
  * This fragment will handle the logic of create new recipe
  * and edit an already added recipe.
  */
+@AndroidEntryPoint
 class AddRecipeFragment : SuperiorFragment(), OnRecyclerViewItemClickListener {
     private val GALLERY_ACTIVITY_RESULT = 1
     lateinit var binding: AddRecipeFragmentBinding

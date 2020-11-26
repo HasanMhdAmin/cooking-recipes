@@ -16,9 +16,11 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.all_recipes_fragment.*
 import amin.mhd.hasan.cookingrecipes.controller.allRecipes.listener.OnImageClickListener as OnImageClickListener1
 
+@AndroidEntryPoint
 class AllRecipesFragment : Fragment(), OnImageClickListener1 {
 
     companion object {

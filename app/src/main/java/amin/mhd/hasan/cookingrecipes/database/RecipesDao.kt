@@ -12,7 +12,7 @@ interface RecipesDao {
     suspend fun insertRecipe(recipe: Recipe)
 
     @Update
-    suspend fun update(recipe: Recipe)
+    suspend fun updateRecipe(recipe: Recipe)
 
     @Delete
     suspend fun deleteRecipe(recipe: Recipe)
